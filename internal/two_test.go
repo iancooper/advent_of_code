@@ -37,6 +37,20 @@ func TestApplyPositionChanges(t *testing.T) {
 
 }
 
+func TestApplyAimedPositionChanges(t *testing.T) {
+	positionChanges := getPositionChanges()
+	expectedPosition := Position{
+		Horizontal: 15,
+		Vertical:   60,
+	}
+
+	position := ApplyAimedPositionChanges(positionChanges)
+
+	if expectedPosition != position {
+		t.Errorf("Expected position to be %+v but was %+v", expectedPosition, position)
+	}
+}
+
 func getPositionChanges() []PositionChange {
 	expectedPositionChanges := []PositionChange{
 		{

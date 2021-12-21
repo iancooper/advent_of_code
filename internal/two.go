@@ -79,3 +79,36 @@ func ApplyPositionChanges(positionChanges []PositionChange) Position {
 	return pos
 
 }
+
+type AimedPosition struct {
+	Pos Position
+	Aim int
+}
+
+func ApplyAimedPositionChanges(positionChanges []PositionChange) Position {
+
+	var apos AimedPosition
+	apos.Pos.Vertical = 0
+	apos.Pos.Horizontal = 0
+	apos.Aim = 0
+
+	for _, v := range positionChanges {
+		switch v.command {
+		case Forward:
+			apos.Pos.Horizontal += v.magnitude
+			apos.Pos.Vertical += apos.Aim * v.magnitude
+		case Down:
+			apos.Aim += v.magnitude
+		case Up:
+			apos.Aim -= v.magnitude
+		}
+	}
+
+	pos := Position{
+		Horizontal: apos.Pos.Horizontal,
+		Vertical:   apos.Pos.Vertical,
+	}
+
+	return pos
+
+}
