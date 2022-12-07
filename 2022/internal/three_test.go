@@ -107,3 +107,34 @@ func TestDuplicatedItems_In_Backpacks(t *testing.T) {
 		t.Errorf("Expected a total of 157 but got %d", priorityTotal)
 	}
 }
+
+func TestCommonItems_In_Backpacks_GroupA(t *testing.T) {
+	backpacks := []string{"vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg"}
+
+	commonItem := CommonItem(backpacks)
+
+	if commonItem != 'r' {
+		t.Errorf("Expected r but was %c", commonItem)
+	}
+}
+
+func TestCommonItems_In_Backpacks_GroupB(t *testing.T) {
+	backpacks := []string{"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"}
+
+	commonItem := CommonItem(backpacks)
+
+	if commonItem != 'Z' {
+		t.Errorf("Expected r but was %c", commonItem)
+	}
+}
+
+func TestCommonItems_Across_Groups(t *testing.T) {
+	backpacks := []string{"vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg", "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"}
+
+	priority := PriorityByBadge(backpacks, 3)
+
+	if priority != 70 {
+		t.Errorf("Expected a badge priority of 70 but was %d", priority)
+	}
+
+}

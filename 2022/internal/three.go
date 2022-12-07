@@ -74,3 +74,47 @@ func RuneToPriority(item rune) int {
 	panic("Was not a letter")
 
 }
+
+func PriorityByBadge(backpacks []string, groupSize int) int {
+	badges := make([]rune, 0, len(backpacks)/3)
+
+	for i := 0; i < len(backpacks)-1; i = i + groupSize {
+		badges = append(badges, CommonItem(backpacks[i:i+groupSize]))
+	}
+
+	priorityCount := 0
+	for _, badge := range badges {
+		priorityCount += RuneToPriority(badge)
+	}
+
+	return priorityCount
+}
+
+func CommonItem(backpacks []string) rune {
+
+	//determine the common runes across the array of strings given by backpacks
+	runeCounts := make(map[rune]int, 26)
+
+	for _, backpack := range backpacks {
+		//Only add a letter once for a pack
+		seen := make(map[rune]bool)
+		for _, item := range backpack {
+			if _, found := seen[item]; !found {
+				runeCounts[item] = runeCounts[item] + 1
+				seen[item] = true
+			}
+		}
+	}
+
+	var badge rune
+
+	for key, value := range runeCounts {
+		if value == 3 {
+			badge = key
+			break
+		}
+	}
+
+	return badge
+
+}
